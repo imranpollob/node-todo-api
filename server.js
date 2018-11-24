@@ -1,23 +1,13 @@
-const mongoose = require('mongoose')
-
-mongoose.Promise = global.Promise
-mongoose.connect('mongodb://localhost:27017/TodoApp', { useNewUrlParser: true })
-
-const Todo = mongoose.model('todo', {
-    text: {
-        type: String
-    },
-    completed: {
-        type: Boolean
-    },
-    completedAt: {
-        type: Number
-    }
-})
+const { Todo } = require("./model/Todo");
+const { User } = require("./model/User");
 
 const newTodo = new Todo({
-    text: 'First Mongoose Task',
-    completed: true,
-})
+  text: "First Mongoose Task"
+});
 
-newTodo.save().then(res => console.log(res), err => console.log(err))
+const newUser = new User({
+  name: "Pollob"
+});
+
+newTodo.save().then(res => console.log(res), err => console.log(err));
+newUser.save().then(res => console.log(res), err => console.log(err));
