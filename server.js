@@ -42,6 +42,24 @@ app.post("/todos", (req, res) => {
   newTodo.save().then(doc => res.send(doc), err => res.status(422).send(err));
 });
 
+app.delete("/todos/:id", (req, res) => {
+  let id = req.params.id;
+
+  if (!ObjectID.isValid(id)) {
+    return res.status(404).send("Invalid Id");
+  }
+
+  Todo.findByIdAndDelete(id).then(
+    todo => {
+      if (!todo) {
+        return res.status(404).send("No match found");
+      }
+      return res.send({ todo });
+    },
+    err => res.status(400).send(err)
+  );
+});
+
 app.post("/users", (req, res) => {
   const newUser = new User({
     name: req.body.name
