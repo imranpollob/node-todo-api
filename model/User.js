@@ -6,28 +6,28 @@ const User = mongoose.model("user", {
     type: String,
     required: true,
     trim: true,
-    minLength: 1,
+    minlength: 1,
     unique: true,
     validate: {
       validator: validator.isEmail,
-      message: '{VALUE} is not valid email'
+      message: '{VALUE} is not a valid email'
     }
   },
   password: {
     type: String,
     require: true,
-    minLength: 6
+    minlength: 6
   },
-  token: {
+  tokens: [{
     access: {
       type: String,
       required: true
     },
     token: {
       type: String,
-      required: true 
+      required: true
     }
-  }
+  }]
 });
 
 module.exports = { User };
