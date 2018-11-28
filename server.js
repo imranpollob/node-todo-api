@@ -5,6 +5,7 @@ const { ObjectID } = require("mongodb");
 
 const { Todo } = require("./model/Todo");
 const { User } = require("./model/User");
+const { authenticate } = require('./middleware/authenticate')
 
 const app = express();
 app.use(bodyParser.json());
@@ -95,5 +96,9 @@ app.post("/users", (req, res) => {
     .then(token => res.header('x-auth', token).send(newUser))
     .catch(err => res.status(422).send(err))
 });
+
+app.get("/users/me", authenticate, (req, res) => {
+  res.send(req.user)
+})
 
 app.listen(5000, () => console.log("Server started on port 5000..."));
