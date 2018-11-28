@@ -90,7 +90,10 @@ app.post("/users", (req, res) => {
   let body = _.pick(req.body, ['email', 'password'])
   const newUser = new User(body);
 
-  newUser.save().then(doc => res.send(doc), err => res.status(422).send(err));
+  newUser.save()
+    .then(() => newUser.generateAuthToken())
+    .then(token => res.header('x-auth', token).send(newUser))
+    .catch(err => res.status(422).send(err))
 });
 
 app.listen(5000, () => console.log("Server started on port 5000..."));
