@@ -106,11 +106,16 @@ app.post('/login', (req, res) => {
 
   User.findByCredentials(body.email, body.password)
     .then((user) => {
-      return user.generateAuthToken().then((token) => res.header('x-auth', token).send(user))
+      return user.generateAuthToken()
+        .then((token) => res.header('x-auth', token).send(user))
     })
-    .catch((e) => {
-      res.status(400).send();
-    });
+    .catch(err => res.status(400).send());
+});
+
+app.post('/logout', authenticate, (req, res) => {
+  req.user.removeToken(req.token)
+    .then(() => res.status(200).send())
+    .catch(err => res.status(400).send());
 });
 
 app.listen(5000, () => console.log("Server started on port 5000..."));
