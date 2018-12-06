@@ -4,17 +4,17 @@ const authenticate = (req, res, next) => {
   const token = req.header('x-auth')
 
   User.findByToken(token)
-    .then(user => {
+    .then((user) => {
       if (!user) {
         return Promise.reject()
       }
 
-      req.user = user;
-      req.token = token;
+      req.user = user
+      req.token = token
 
-      next()
+      next();
     })
-    .catch(err => res.status(401).send(err))
-}
+    .catch((e) => res.status(401).send());
+};
 
 module.exports = { authenticate }

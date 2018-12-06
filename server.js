@@ -97,9 +97,9 @@ app.post("/users", (req, res) => {
     .catch(err => res.status(422).send(err))
 });
 
-app.get("/users/me", authenticate, (req, res) => {
-  res.send(req.user)
-})
+app.get('/users/me', authenticate, (req, res) => {
+  res.send(req.user);
+});
 
 app.post('/login', (req, res) => {
   var body = _.pick(req.body, ['email', 'password']);
@@ -112,7 +112,7 @@ app.post('/login', (req, res) => {
     .catch(err => res.status(400).send());
 });
 
-app.post('/logout', authenticate, (req, res) => {
+app.delete('/logout', authenticate, (req, res) => {
   req.user.removeToken(req.token)
     .then(() => res.status(200).send())
     .catch(err => res.status(400).send());

@@ -55,7 +55,7 @@ UserSchema.statics.findByToken = function (token) {
     return Promise.reject()
   }
 
-  return this.findOneAndUpdate({
+  return this.findOne({
     '_id': decoded._id,
     'tokens.token': token,
     'tokens.access': 'auth'
