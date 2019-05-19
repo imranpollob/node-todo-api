@@ -7,6 +7,7 @@ const { Todo } = require("./model/Todo");
 const { User } = require("./model/User");
 const { authenticate } = require('./middleware/authenticate')
 
+const port = process.env.PORT || 5000
 const app = express();
 app.use(bodyParser.json());
 
@@ -130,4 +131,4 @@ app.delete('/logout', authenticate, (req, res) => {
     .catch(err => res.status(400).send());
 });
 
-app.listen(5000, () => console.log("Server started on port 5000..."));
+app.listen(port, () => console.log("Server started on port 5000..."));
